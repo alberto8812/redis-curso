@@ -2,7 +2,7 @@ import { pageCahcheKey } from "$services/keys";
 import { client } from "$services/redis";
 
 const catchRouter = [
-    '/about', '/privacy', '/auth/signin', '/auth/signin',
+    '/about', '/privacy', '/auth/signup', '/auth/signin',
 ]
 
 /**
@@ -24,11 +24,10 @@ export const getCachedPage = (route: string) => {
 export const setCachedPage = (route: string, page: string) => {
     if (catchRouter.includes(route)) {
         return client.set(pageCahcheKey(route), page, {
-            EX: 60 * 60 * 24 // 1 day
+            EX: 60
         });
 
 
     }
 };
 
-client.get
