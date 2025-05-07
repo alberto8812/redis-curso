@@ -3,3 +3,5 @@ export const pageCahcheKey = (route: string) => {
 }
 
 export const usersKey = (userId: string) => `users#${userId}`;
+export const sessionskey = (sessionId: string) => `sessions#${sessionId}`;
+export const itemsKeys = (itemsId: string) => `items#${itemsId}`;
