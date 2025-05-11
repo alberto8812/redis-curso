@@ -15,7 +15,6 @@ export const useSession: Handle = async ({ event, resolve }) => {
 	if (auth) {
 		[sessionId, sig] = auth.split(':');
 	}
-
 	let session: Session;
 	if (!sessionId || !keys.verify(sessionId, sig)) {
 		session = await createSession();
