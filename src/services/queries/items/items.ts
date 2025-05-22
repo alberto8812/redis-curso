@@ -1,4 +1,4 @@
-import { itemsKeys } from '$services/keys';
+import { itemsKeys, itemByViewsKeys, itemsByEndingAtKey } from '$services/keys';
 import { client } from '$services/redis';
 import type { CreateItemAttrs } from '$services/types';
 import { genId } from '$services/utils';
@@ -26,7 +26,15 @@ export const createItem = async (attrs: CreateItemAttrs, userId: string) => {
     const keyId = itemsKeys(id);
     const serialized = serialize(attrs);
     await client.hSet(keyId, serialized);
-
+    //registramos la  views con 0
+    await client.zAdd(itemByViewsKeys(), {
+        value: id,
+        score: 0
+    })
+    await client.zAdd(itemsByEndingAtKey(), {
+        value: id,
+        score: attrs.endingAt.toMillis()
+    })
     return id;
 
 };
